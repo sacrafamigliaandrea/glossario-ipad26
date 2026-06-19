@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glossario iPad · iPadOS 26 — Flashcard</title>
+<style>
+  :root{
+    --ink:#1d1d1f;
+    --ink-soft:#86868b;
+    --line:rgba(0,0,0,.08);
+    --blue:#2d6cdf;
+    --blue-deep:#1f53b8;
+    --accent-grad:linear-gradient(180deg,#6db0ff,#2d6cdf);
+    --novita:#0a7d4b;
+    --pill:#ededf2;
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:var(--font);color:var(--ink);min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(900px 520px at 8% -8%,rgba(255,182,214,.30),transparent 60%),
+      radial-gradient(820px 480px at 98% -4%,rgba(168,200,255,.34),transparent 58%),
+      radial-gradient(760px 520px at 50% 108%,rgba(201,182,250,.28),transparent 60%),
+      radial-gradient(680px 460px at 0% 100%,rgba(176,232,219,.24),transparent 60%),
+      #fbfcfe;
+    background-attachment:fixed;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:saturate(180%) blur(22px);
+    -webkit-backdrop-filter:saturate(180%) blur(22px);
+    background:rgba(251,252,254,.7);
+    border-bottom:1px solid var(--line);
+  }
+  .head-inner{max-width:1340px;margin:0 auto;padding:16px 26px 0;display:flex;flex-direction:column;gap:14px}
+  .brand{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand .mark{
+    width:46px;height:46px;border-radius:13px;background:var(--accent-grad);
+    display:grid;place-items:center;flex:none;box-shadow:0 6px 16px rgba(45,108,223,.32);
+  }
+  .brand h1{font-size:21px;font-weight:700;letter-spacing:-.02em}
+  .brand .sub{font-size:12.5px;color:var(--ink-soft);font-weight:500}
+  .brand .ver{
+    margin-left:auto;font-size:12px;font-weight:600;color:var(--blue-deep);
+    border:1px solid rgba(45,108,223,.28);border-radius:999px;padding:5px 13px;
+    background:rgba(45,108,223,.07);white-space:nowrap;
+  }
+  nav.tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 0 14px;scrollbar-width:thin}
+  nav.tabs::-webkit-scrollbar{height:6px}
+  nav.tabs::-webkit-scrollbar-thumb{background:rgba(0,0,0,.16);border-radius:999px}
+  .tab{
+    flex:0 0 auto;display:flex;align-items:center;gap:8px;
+    border:1px solid var(--line);background:rgba(255,255,255,.6);
+    color:var(--ink-soft);padding:9px 15px;border-radius:13px;
+    font-size:13.5px;font-weight:600;cursor:pointer;transition:all .18s ease;white-space:nowrap;
+  }
+  .tab:hover{background:#fff;color:var(--ink);transform:translateY(-1px)}
+  .tab svg{width:17px;height:17px;flex:none}
+  .tab .n{font-size:11px;font-weight:700;color:#fff;background:#c4c6cf;border-radius:7px;padding:1px 6px;min-width:20px;text-align:center}
+  .tab.active{background:var(--accent-grad);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(45,108,223,.32)}
+  .tab.active .n{background:rgba(255,255,255,.3)}
+
+  /* ---------- Main ---------- */
+  main{max-width:1340px;margin:0 auto;padding:28px 26px}
+  .topic-head{display:flex;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  .topic-head .ico{
+    width:54px;height:54px;border-radius:16px;flex:none;background:#fff;
+    border:1px solid var(--line);display:grid;place-items:center;box-shadow:0 8px 22px rgba(30,40,80,.08);
+  }
+  .topic-head .ico svg{width:28px;height:28px}
+  .topic-head h2{font-size:26px;font-weight:700;letter-spacing:-.02em}
+  .topic-head p{font-size:14px;color:var(--ink-soft);margin-top:3px;max-width:660px}
+  .topic-head .counter{
+    margin-left:auto;font-size:12.5px;color:var(--ink-soft);font-weight:600;
+    background:rgba(255,255,255,.7);border:1px solid var(--line);padding:8px 14px;border-radius:12px;white-space:nowrap;
+  }
+  .topic-head .counter b{color:var(--blue-deep)}
+  .toolbar{display:flex;gap:10px;margin-bottom:26px;flex-wrap:wrap}
+  .btn{
+    border:1px solid var(--line);background:rgba(255,255,255,.7);padding:9px 16px;border-radius:12px;
+    font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;transition:all .16s ease;
+    display:inline-flex;align-items:center;gap:7px;
+  }
+  .btn:hover{background:#fff;transform:translateY(-1px)}
+  .btn svg{width:15px;height:15px}
+
+  /* ---------- Grid 3x3 ---------- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  @media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:660px){.grid{grid-template-columns:1fr}}
+
+  /* ---------- iPad-shaped flashcard ---------- */
+  .card{perspective:1600px;cursor:pointer;animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  .ipad{
+    position:relative;width:100%;aspect-ratio:1.4/1;
+    transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,.8,.2,1);
+  }
+  .card.flipped .ipad{transform:rotateY(180deg)}
+  .card:hover .ipad{transform:translateY(-4px)}
+  .card.flipped:hover .ipad{transform:rotateY(180deg) translateY(-4px)}
+
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:32px;padding:11px;
+    background:linear-gradient(145deg,#eceef2 0%,#d3d6dd 55%,#bcc0c9 100%);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.7) inset,
+      0 0 0 1px rgba(0,0,0,.06),
+      0 16px 36px rgba(30,40,80,.16);
+  }
+  .face.back{transform:rotateY(180deg)}
+  .cam{position:absolute;top:5.5px;left:50%;transform:translateX(-50%);width:6px;height:6px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#5b5d66,#222);opacity:.55;z-index:3}
+  .screen{
+    position:relative;width:100%;height:100%;border-radius:22px;overflow:hidden;
+    background:
+      radial-gradient(120px 80px at 18% 16%,rgba(255,176,210,.40),transparent 70%),
+      radial-gradient(150px 95px at 86% 18%,rgba(150,190,255,.46),transparent 70%),
+      radial-gradient(150px 100px at 80% 92%,rgba(196,176,250,.40),transparent 72%),
+      radial-gradient(140px 95px at 14% 88%,rgba(170,228,214,.34),transparent 72%),
+      #fbfcfe;
+    box-shadow:0 0 0 1px rgba(0,0,0,.05) inset;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:22px 26px;text-align:center;
+  }
+  /* fronte */
+  .novita{
+    position:absolute;top:13px;right:14px;font-size:9.5px;font-weight:800;letter-spacing:.04em;
+    text-transform:uppercase;color:#fff;background:var(--novita);padding:4px 9px;border-radius:999px;
+  }
+  .bigico{width:46px;height:46px;margin-bottom:14px}
+  .bigico svg{width:46px;height:46px}
+  .term{font-size:21px;font-weight:700;letter-spacing:-.02em;line-height:1.12}
+  .en{font-size:12px;color:var(--ink-soft);font-weight:500;margin-top:6px}
+  .pill{
+    margin-top:18px;font-size:12.5px;font-weight:600;color:var(--blue);
+    background:var(--pill);border-radius:999px;padding:8px 20px;border:1px solid rgba(0,0,0,.04);
+  }
+  /* retro */
+  .back .screen{justify-content:flex-start;padding:20px 24px}
+  .back-term{
+    display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--blue-deep);
+    align-self:stretch;padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid rgba(0,0,0,.07);
+  }
+  .back-term svg{width:16px;height:16px;flex:none}
+  .def{font-size:14.5px;line-height:1.5;color:#33343a;text-align:left;flex:1;display:flex;align-items:center}
+  .back .pill{margin-top:8px;color:var(--ink-soft);align-self:center}
+
+  footer{
+    max-width:1340px;margin:18px auto 0;padding:14px 26px 44px;font-size:11.5px;color:var(--ink-soft);
+    line-height:1.55;border-top:1px solid var(--line);
+  }
+  footer b{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<!-- gradiente blu condiviso per le icone (stile setup iPad) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7bbcff"/>
+      <stop offset="1" stop-color="#2d6cdf"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header>
+  <div class="head-inner">
+    <div class="brand">
+      <div class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4.5" width="18" height="15" rx="2.4"/><circle cx="12" cy="12" r="0.6" fill="#fff"/>
+        </svg>
+      </div>
+      <div>
+        <h1>Glossario iPad</h1>
+        <div class="sub">Le parole dell'iPad spiegate semplici · 90 carte · 10 argomenti</div>
+      </div>
+      <span class="ver">iPadOS 26</span>
+    </div>
+    <nav class="tabs" id="tabs"></nav>
+  </div>
+</header>
+
+<main>
+  <div class="topic-head">
+    <div class="ico" id="topicIco"></div>
+    <div>
+      <h2 id="topicTitle"></h2>
+      <p id="topicDesc"></p>
+    </div>
+    <div class="counter">Carte scoperte: <b id="flipCount">0</b> / 9</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" id="flipAll">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+      Scopri tutte
+    </button>
+    <button class="btn" id="reset">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-6.4 2.6L3 8"/><path d="M3 3v5h5"/></svg>
+      Ricomincia
+    </button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  <b>Glossario iPad — iPadOS 26.</b> Carte per imparare le parole dell'iPad. Le spiegazioni sono scritte apposta per la scuola, partendo dai termini del Manuale utente di iPad (Apple). I nomi delle funzioni appartengono ad Apple Inc. · Tocca una carta per scoprire cosa vuol dire.
+</footer>
+
+<script>
+const I = {
+  home:'<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/><path d="M9.5 21v-6h5v6"/>',
+  windows:'<rect x="2.5" y="4" width="12" height="9" rx="1.5"/><rect x="9.5" y="11" width="12" height="9" rx="1.5"/>',
+  pencil:'<path d="M16.5 3.5 20.5 7.5 8 20l-4.5 1 1-4.5z"/><path d="m14.5 5.5 4 4"/>',
+  cloud:'<path d="M7 18a4 4 0 0 1 0-8 5.5 5.5 0 0 1 10.5 1.5A3.5 3.5 0 0 1 17 18z"/><path d="M12 13v6"/><path d="m9.5 16.5 2.5 2.5 2.5-2.5"/>',
+  chat:'<path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.6 9.6 0 0 1-3.7-.7L3 21l1.5-4A8.2 8.2 0 0 1 3 11.5 8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/>',
+  lock:'<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/><circle cx="12" cy="15.5" r="1.4"/>',
+  wifi:'<path d="M2.5 9.5a14 14 0 0 1 19 0"/><path d="M5.5 13a9.5 9.5 0 0 1 13 0"/><path d="M8.5 16.4a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1.2"/>',
+  gear:'<circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18 6l-2.1 2.1M8.1 15.9 6 18M18 18l-2.1-2.1M8.1 8.1 6 6"/>',
+  apps:'<rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/>',
+  spark:'<path d="M12 3v5M12 16v5M3 12h5M16 12h5"/><path d="m6.5 6.5 2.8 2.8M14.7 14.7l2.8 2.8M17.5 6.5l-2.8 2.8M9.3 14.7l-2.8 2.8"/>',
+  book:'<path d="M4 4.5A2 2 0 0 1 6 3h13v15H6a2 2 0 0 0-2 2z"/><path d="M4 19.5A2 2 0 0 1 6 18h13"/>'
+};
+function svg(path, stroke='currentColor', w='1.6'){
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
+}
+
+/* 10 gruppi × 9 = 90 carte · definizioni semplici per 11 anni */
+const GROUPS = [
+{
+  id:'interfaccia', name:'Come si usa', icon:I.home,
+  desc:'Le parti che vedi sempre sullo schermo e i movimenti delle dita per muoverti.',
+  cards:[
+    {t:'Schermata Home', en:'Home Screen', d:'È la prima schermata con tutte le tue app. Da qui apri quello che ti serve e ci torni facendo scorrere un dito dal basso.'},
+    {t:'Dock', en:'Dock', d:'La barra in basso con le app che usi di più, sempre a portata di dito. Compare con un piccolo scorrimento dal bordo inferiore.'},
+    {t:'Libreria app', en:'App Library', d:'Un raccoglitore che ordina da solo tutte le app in gruppi. Serve a tenere la Home in ordine senza cancellare niente.'},
+    {t:'Spotlight', en:'Spotlight', d:'La ricerca dell\'iPad: scrivi una parola e trova app, file e informazioni. Si apre tirando giù dal centro dello schermo.'},
+    {t:'Centro di Controllo', en:'Control Center', d:'Un pannello di scorciatoie per volume, luminosità, Wi-Fi e torcia. Si apre dall\'angolo in alto a destra.'},
+    {t:'Schermata di blocco', en:'Lock Screen', d:'La schermata che vedi appena accendi l\'iPad: mostra l\'ora e gli avvisi. Puoi cambiarle sfondo e stile.'},
+    {t:'Widget', en:'Widget', d:'Un riquadro che mostra a colpo d\'occhio le informazioni di un\'app, come il meteo o gli impegni, senza doverla aprire.'},
+    {t:'Gesti', en:'Gesti', d:'I movimenti delle dita per comandare l\'iPad: scorrere, toccare, allargare. Sostituiscono i pulsanti.'},
+    {t:'Azioni rapide', en:'Quick Actions', d:'Il menù che appare se tieni premuto su un\'icona: ti propone subito le cose più utili da fare con quell\'app.'}
+  ]
+},
+{
+  id:'multitasking', name:'Più app insieme', icon:I.windows,
+  desc:'Usare tante app nello stesso momento. Qui ci sono le grandi novità di iPadOS 26.',
+  cards:[
+    {t:'Stage Manager', en:'Stage Manager', d:'Tiene le app aperte come finestre che puoi spostare e ridimensionare, con quelle recenti raccolte di lato per cambiare al volo.', nuovo:true},
+    {t:'Barra dei menu', en:'Menu Bar', d:'Una barra in alto, come sul computer, che appare avvicinando il puntatore: contiene tutti i comandi di un\'app.', nuovo:true},
+    {t:'Finestre regolabili', en:'Resizable Windows', d:'Puoi aprire un\'app come una finestra, spostarla e cambiarne la grandezza tirando gli angoli, proprio come su un PC.', nuovo:true},
+    {t:'Affiancamento', en:'Window Layouts', d:'Disposizioni veloci per mettere due app fianco a fianco e vederle insieme senza fatica.'},
+    {t:'Picture in Picture', en:'Picture in Picture', d:'Rimpicciolisce un video in un riquadro che resta sempre visibile, così lo guardi mentre usi altre app.'},
+    {t:'Trascina e rilascia', en:'Drag and Drop', d:'Sposti testo, foto o file da un\'app all\'altra tenendoli premuti e lasciandoli dove vuoi.'},
+    {t:'Cambio app', en:'App Switcher', d:'La vista con tutte le app aperte in piccolo: serve a passare da una all\'altra o a chiuderle con un dito.'},
+    {t:'Schermo esterno', en:'External Display', d:'Collegando un monitor, puoi allargare il lavoro su un secondo schermo e spostarci sopra le finestre.'},
+    {t:'Due finestre stessa app', en:'Multiple Windows', d:'Puoi aprire la stessa app due volte, ad esempio due note vicine, per confrontarle o lavorare in parallelo.'}
+  ]
+},
+{
+  id:'pencil', name:'Scrivere e disegnare', icon:I.pencil,
+  desc:'Gli strumenti per scrivere, disegnare e dettare il testo con la penna o con la voce.',
+  cards:[
+    {t:'Apple Pencil', en:'Apple Pencil', d:'La penna che scrive e disegna direttamente sullo schermo. Sente quanto premi e come la inclini.'},
+    {t:'Calligrafia', en:'Scribble', d:'Scrivi a mano con l\'Apple Pencil e l\'iPad trasforma subito quello che scrivi in testo stampato.'},
+    {t:'Tastiera su schermo', en:'On-screen Keyboard', d:'La tastiera che appare per scrivere. Puoi dividerla, spostarla o renderla più piccola.'},
+    {t:'Tastiera flottante', en:'Floating Keyboard', d:'Una tastiera piccola che sposti dove vuoi e usi facendo scorrere un dito da una lettera all\'altra.'},
+    {t:'Dettatura', en:'Dictation', d:'Parli e l\'iPad scrive al posto tuo. Comoda per prendere appunti veloci.'},
+    {t:'Testo predittivo', en:'Predictive Text', d:'Mentre scrivi, l\'iPad ti suggerisce la parola dopo, così digiti più in fretta.'},
+    {t:'Sostituzioni testo', en:'Text Replacement', d:'Imposti una sigla che diventa una frase intera, ad esempio "ind" che diventa il tuo indirizzo.'},
+    {t:'Nota rapida', en:'Quick Note', d:'Un foglietto per appunti che richiami da qualsiasi app, per scrivere senza chiudere quello che stai facendo.'},
+    {t:'Hover', en:'Hover', d:'Su alcuni iPad, avvicinando la penna senza toccare, lo schermo ti mostra in anticipo dove scriverai.'}
+  ]
+},
+{
+  id:'account', name:'Account e iCloud', icon:I.cloud,
+  desc:'Come l\'iPad salva i tuoi dati online e li tiene uguali su tutti i dispositivi.',
+  cards:[
+    {t:'Apple Account', en:'Apple Account', d:'Il tuo account personale che collega tutti i servizi Apple. È la chiave per entrare nel tuo iPad e nei tuoi acquisti.'},
+    {t:'iCloud', en:'iCloud', d:'Uno spazio online dove l\'iPad salva foto, file e contatti e li rende disponibili anche su altri dispositivi.'},
+    {t:'iCloud Drive', en:'iCloud Drive', d:'La parte di iCloud per i documenti: li ritrovi nell\'app File sempre aggiornati, ovunque tu sia.'},
+    {t:'iCloud+', en:'iCloud+', d:'La versione a pagamento di iCloud, con più spazio e funzioni extra per proteggere la privacy.'},
+    {t:'Backup', en:'Backup', d:'Una copia di sicurezza dei tuoi dati. Se perdi l\'iPad o ne prendi uno nuovo, puoi rimettere tutto com\'era.'},
+    {t:'Handoff', en:'Handoff', d:'Inizi una cosa sull\'iPad e la continui su iPhone o Mac senza ricominciare da capo.'},
+    {t:'Continuity', en:'Continuity', d:'L\'insieme di funzioni che fanno lavorare insieme i dispositivi Apple, come chiamate e appunti condivisi.'},
+    {t:'In famiglia', en:'Family Sharing', d:'Permette di condividere acquisti, abbonamenti e spazio iCloud tra i membri della famiglia.'},
+    {t:'Sincronizzazione', en:'Sincronizzazione', d:'Quando cambi una cosa su un dispositivo, compare subito uguale su tutti gli altri.'}
+  ]
+},
+{
+  id:'comunicazione', name:'Comunicare', icon:I.chat,
+  desc:'Messaggi, videochiamate e strumenti per scrivere e parlare con gli altri a distanza.',
+  cards:[
+    {t:'iMessage', en:'iMessage', d:'Il servizio di messaggi Apple (le bolle azzurre) che invia testi e foto tra dispositivi Apple usando internet.'},
+    {t:'FaceTime', en:'FaceTime', d:'L\'app per le videochiamate e le chiamate audio tra dispositivi Apple.'},
+    {t:'Tapback', en:'Tapback', d:'Una reazione veloce a un messaggio (cuore, pollice, punto interrogativo) che metti tenendolo premuto.'},
+    {t:'Memoji', en:'Memoji', d:'Un avatar che assomiglia a te, fa le tue facce e si invia come adesivo nelle chat.'},
+    {t:'SharePlay', en:'SharePlay', d:'Durante una videochiamata, guardi un video o ascolti musica nello stesso momento dei tuoi amici.'},
+    {t:'Mail', en:'Mail', d:'L\'app della posta elettronica, dove leggi, scrivi e ordini le email.'},
+    {t:'Trascrizioni live', en:'Live Captions', d:'Mostra a schermo, scritto, quello che viene detto durante una chiamata. Utile anche per chi non sente bene.'},
+    {t:'Traduzione in tempo reale', en:'Live Translation', d:'Traduce le frasi mentre parli o scrivi, per capirti con chi usa un\'altra lingua.'},
+    {t:'Chat di gruppo', en:'Group Conversation', d:'Una conversazione con più persone insieme, dove puoi rispondere a un messaggio preciso o nominare qualcuno.'}
+  ]
+},
+{
+  id:'sicurezza', name:'Sicurezza', icon:I.lock,
+  desc:'Come l\'iPad protegge i tuoi dati e le tue password da chi non deve vederli.',
+  cards:[
+    {t:'Face ID', en:'Face ID', d:'Sblocca l\'iPad riconoscendo il tuo viso. Guarda lo schermo e si apre solo per te.'},
+    {t:'Touch ID', en:'Touch ID', d:'Sblocca l\'iPad leggendo la tua impronta digitale, con un dito appoggiato sul tasto.'},
+    {t:'Codice', en:'Passcode', d:'I numeri segreti che proteggono l\'iPad. Servono anche quando Face ID o Touch ID non funzionano.'},
+    {t:'Passkey', en:'Passkey', d:'Un modo nuovo e sicuro per accedere che prende il posto delle password ed è difficile da rubare.'},
+    {t:'Due fattori', en:'Two-Factor Auth', d:'Una protezione in più: oltre alla password serve un codice che arriva su un dispositivo di cui ti fidi.'},
+    {t:'Accedi con Apple', en:'Sign in with Apple', d:'Entri in app e siti senza creare nuove password e puoi tenere nascosta la tua email vera.'},
+    {t:'Nascondi la mia email', en:'Hide My Email', d:'Crea indirizzi email finti che girano i messaggi alla tua email vera, per non darla in giro.'},
+    {t:'App Password', en:'Passwords', d:'L\'app che custodisce in modo sicuro tutte le tue password e te le scrive da sola quando servono.'},
+    {t:'Privacy di Mail', en:'Mail Privacy', d:'Nasconde le tue tracce così chi ti scrive non sa se e quando hai aperto la sua email.'}
+  ]
+},
+{
+  id:'rete', name:'Connessioni', icon:I.wifi,
+  desc:'Le tecnologie con cui l\'iPad si collega a internet, agli accessori e agli altri dispositivi.',
+  cards:[
+    {t:'Wi-Fi', en:'Wi-Fi', d:'Il collegamento a internet senza fili tramite una rete vicina. È il modo principale per andare online.'},
+    {t:'Bluetooth', en:'Bluetooth', d:'Un collegamento senza fili a corta distanza per cuffie, tastiere e per l\'Apple Pencil.'},
+    {t:'AirDrop', en:'AirDrop', d:'Invii al volo foto e file ai dispositivi Apple vicini, senza cavi e senza internet.'},
+    {t:'AirPlay', en:'AirPlay', d:'Mandi quello che vedi o ascolti dall\'iPad alla TV o agli altoparlanti compatibili.'},
+    {t:'Hotspot personale', en:'Personal Hotspot', d:'L\'iPad (o l\'iPhone) condivide la sua connessione internet con altri dispositivi.'},
+    {t:'Dati cellulare', en:'Cellular Data', d:'La connessione a internet tramite rete telefonica, su alcuni iPad che hanno la SIM.'},
+    {t:'eSIM', en:'eSIM', d:'Una SIM digitale già dentro l\'iPad: attivi internet senza inserire una scheda.'},
+    {t:'Modalità aereo', en:'Airplane Mode', d:'Con un tocco spegne tutte le connessioni senza fili, ad esempio quando sei in aereo.'},
+    {t:'VPN', en:'VPN', d:'Un collegamento protetto che nasconde i tuoi dati, usato spesso a scuola o al lavoro.'}
+  ]
+},
+{
+  id:'sistema', name:'Impostazioni', icon:I.gear,
+  desc:'Come gestire avvisi, concentrazione, batteria e le funzioni di base dell\'iPad.',
+  cards:[
+    {t:'Full immersion', en:'Focus', d:'Una modalità che blocca gli avvisi che distraggono, ad esempio mentre studi o riposi.'},
+    {t:'Non disturbare', en:'Do Not Disturb', d:'La più semplice delle full immersion: silenzia avvisi e chiamate per non essere interrotti.'},
+    {t:'Notifiche', en:'Notifications', d:'Gli avvisi delle app. Puoi raggrupparli e decidere quando riceverli.'},
+    {t:'Tempo di utilizzo', en:'Screen Time', d:'Mostra quanto usi l\'iPad e permette di mettere dei limiti alle app.'},
+    {t:'Risparmio energetico', en:'Low Power Mode', d:'Riduce i consumi per far durare di più la batteria quando è quasi scarica.'},
+    {t:'Screenshot', en:'Screenshot', d:'Una foto di quello che hai sullo schermo, che puoi subito scrivere sopra e condividere.'},
+    {t:'Registrazione schermo', en:'Screen Recording', d:'Registra in video quello che succede sullo schermo, utile per spiegare qualcosa.'},
+    {t:'Impostazioni', en:'Settings', d:'L\'app da cui regoli tutto l\'iPad: account, suoni, rete, privacy e altro.'},
+    {t:'Aggiornamento', en:'Software Update', d:'L\'operazione che installa la nuova versione di iPadOS, con novità e correzioni di sicurezza.'}
+  ]
+},
+{
+  id:'app', name:'App utili', icon:I.apps,
+  desc:'Le app già presenti nell\'iPad più utili per studiare, ordinare documenti e lavorare in classe.',
+  cards:[
+    {t:'App Store', en:'App Store', d:'Il negozio ufficiale dove scarichi e aggiorni le app.'},
+    {t:'File', en:'Files', d:'L\'app che raccoglie tutti i tuoi documenti, sia sull\'iPad sia su iCloud, ordinati in cartelle.'},
+    {t:'Anteprima', en:'Preview', d:'La nuova app per vedere, scrivere sopra e firmare PDF e immagini in modo semplice.', nuovo:true},
+    {t:'Freeform', en:'Freeform', d:'Una lavagna senza confini dove disegnare, scrivere e mettere idee, anche insieme ai compagni.'},
+    {t:'Note', en:'Notes', d:'L\'app per gli appunti: unisce testo, disegni, foto e documenti scansionati.'},
+    {t:'Promemoria', en:'Reminders', d:'Per fare liste di cose da fare con scadenze e avvisi, così non dimentichi niente.'},
+    {t:'Cartelle smart', en:'Smart Folders', d:'Cartelle che raccolgono da sole le note giuste seguendo delle regole, senza spostarle a mano.'},
+    {t:'App clip', en:'App Clip', d:'Un pezzettino di un\'app che si apre al volo per una cosa veloce, senza installarla tutta.'},
+    {t:'Gruppi di pannelli', en:'Tab Groups', d:'In Safari, insiemi di schede salvate insieme, per tenere separati ad esempio scuola e tempo libero.'}
+  ]
+},
+{
+  id:'intelligenti', name:'Funzioni smart', icon:I.spark,
+  desc:'Strumenti intelligenti, fotocamera e il nuovo aspetto grafico arrivato con iPadOS 26.',
+  cards:[
+    {t:'Apple Intelligence', en:'Apple Intelligence', d:'Le funzioni intelligenti dell\'iPad che aiutano a scrivere, riassumere e creare immagini, con attenzione alla privacy.', nuovo:true},
+    {t:'Siri', en:'Siri', d:'L\'assistente che capisce le tue richieste a voce o scritte e ti aiuta a usare l\'iPad.'},
+    {t:'Testo attivo', en:'Live Text', d:'Riconosce il testo dentro le foto: puoi copiarlo, tradurlo o trasformarlo in un link.'},
+    {t:'Liquid Glass', en:'Liquid Glass', d:'Il nuovo aspetto di iPadOS 26: superfici simili al vetro che lasciano intravedere quello che c\'è sotto.', nuovo:true},
+    {t:'Lente', en:'Magnifier', d:'Usa la fotocamera come una lente d\'ingrandimento e descrive ciò che hai intorno.'},
+    {t:'Live Photo', en:'Live Photo', d:'Una foto che cattura anche un attimo di movimento e suono: si anima se la tieni premuta.'},
+    {t:'Modalità Ritratto', en:'Portrait Mode', d:'Mette a fuoco la persona e sfoca lo sfondo, per ritratti che sembrano fatti da un fotografo.'},
+    {t:'Codice QR', en:'QR Code', d:'La fotocamera legge i quadratini QR e apre da sola il link o la pagina collegata.'},
+    {t:'Scontorno', en:'Subject Lift', d:'Tieni premuto su una persona o un oggetto in una foto e l\'iPad lo stacca dallo sfondo per copiarlo.'}
+  ]
+}
+];
+
+const tabsEl=document.getElementById('tabs');
+const gridEl=document.getElementById('grid');
+const titleEl=document.getElementById('topicTitle');
+const descEl=document.getElementById('topicDesc');
+const icoEl=document.getElementById('topicIco');
+const flipCountEl=document.getElementById('flipCount');
+let current=0;
+
+GROUPS.forEach((g,i)=>{
+  const b=document.createElement('button');
+  b.className='tab'+(i===0?' active':'');
+  b.innerHTML=svg(g.icon,'currentColor','1.7')+'<span>'+g.name+'</span><span class="n">'+(i+1)+'</span>';
+  b.addEventListener('click',()=>select(i));
+  tabsEl.appendChild(b);
+});
+
+function updateFlipCount(){flipCountEl.textContent=gridEl.querySelectorAll('.card.flipped').length;}
+
+function select(i){
+  current=i;
+  const g=GROUPS[i];
+  document.querySelectorAll('.tab').forEach((t,k)=>t.classList.toggle('active',k===i));
+  titleEl.textContent=g.name;
+  descEl.textContent=g.desc;
+  icoEl.innerHTML=svg(g.icon,'url(#blueGrad)','1.8');
+  gridEl.innerHTML='';
+  g.cards.forEach((c,k)=>{
+    const card=document.createElement('div');
+    card.className='card';
+    card.style.animationDelay=(k*0.04)+'s';
+    card.innerHTML=`
+      <div class="ipad">
+        <div class="face front">
+          <span class="cam"></span>
+          <div class="screen">
+            ${c.nuovo?'<span class="novita">Novità 26</span>':''}
+            <div class="bigico">${svg(g.icon,'url(#blueGrad)','1.7')}</div>
+            <div class="term">${c.t}</div>
+            <div class="en">${c.en}</div>
+            <div class="pill">Scopri</div>
+          </div>
+        </div>
+        <div class="face back">
+          <span class="cam"></span>
+          <div class="screen">
+            <div class="back-term">${svg(g.icon,'url(#blueGrad)','1.8')} ${c.t}</div>
+            <div class="def">${c.d}</div>
+            <div class="pill">Tocca per girare</div>
+          </div>
+        </div>
+      </div>`;
+    card.addEventListener('click',()=>{card.classList.toggle('flipped');updateFlipCount();});
+    gridEl.appendChild(card);
+  });
+  updateFlipCount();
+}
+
+document.getElementById('flipAll').addEventListener('click',()=>{
+  const cards=gridEl.querySelectorAll('.card');
+  const anyUnflipped=[...cards].some(c=>!c.classList.contains('flipped'));
+  cards.forEach(c=>c.classList.toggle('flipped',anyUnflipped));
+  updateFlipCount();
+});
+document.getElementById('reset').addEventListener('click',()=>{
+  gridEl.querySelectorAll('.card').forEach(c=>c.classList.remove('flipped'));
+  updateFlipCount();
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight') select((current+1)%GROUPS.length);
+  if(e.key==='ArrowLeft') select((current-1+GROUPS.length)%GROUPS.length);
+});
+
+select(0);
+</script>
+</body>
+</html>
