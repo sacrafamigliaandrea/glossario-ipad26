@@ -18,7 +18,8 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{
-    font-family:var(--font);color:var(--ink);min-height:100vh;
+    font-family:var(--font);color:var(--ink);height:100vh;
+    display:flex;flex-direction:column;overflow:hidden;
     -webkit-font-smoothing:antialiased;
     background:
       radial-gradient(900px 520px at 8% -8%,rgba(255,182,214,.30),transparent 60%),
@@ -31,26 +32,36 @@
 
   /* ---------- Header ---------- */
   header{
-    position:sticky;top:0;z-index:50;
+    flex:none;z-index:50;
     backdrop-filter:saturate(180%) blur(22px);
     -webkit-backdrop-filter:saturate(180%) blur(22px);
     background:rgba(251,252,254,.7);
     border-bottom:1px solid var(--line);
   }
-  .head-inner{max-width:1340px;margin:0 auto;padding:16px 26px 0;display:flex;flex-direction:column;gap:14px}
-  .brand{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .head-inner{max-width:1340px;margin:0 auto;padding:11px 26px 0;display:flex;flex-direction:column;gap:10px;width:100%}
+  .brand{display:flex;align-items:center;gap:13px;flex-wrap:wrap}
   .brand .mark{
-    width:46px;height:46px;border-radius:13px;background:var(--accent-grad);
+    width:40px;height:40px;border-radius:12px;background:var(--accent-grad);
     display:grid;place-items:center;flex:none;box-shadow:0 6px 16px rgba(45,108,223,.32);
   }
-  .brand h1{font-size:21px;font-weight:700;letter-spacing:-.02em}
-  .brand .sub{font-size:12.5px;color:var(--ink-soft);font-weight:500}
+  .brand h1{font-size:18px;font-weight:700;letter-spacing:-.02em}
+  .brand .sub{font-size:12px;color:var(--ink-soft);font-weight:500}
+  .head-tools{margin-left:auto;display:flex;align-items:center;gap:9px}
+  .count{font-size:12.5px;color:var(--ink-soft);font-weight:600;white-space:nowrap}
+  .count b{color:var(--blue-deep)}
+  .ibtn{
+    width:34px;height:34px;border-radius:10px;border:1px solid var(--line);
+    background:rgba(255,255,255,.7);color:var(--ink);cursor:pointer;
+    display:grid;place-items:center;transition:all .16s ease;
+  }
+  .ibtn:hover{background:#fff;color:var(--blue);transform:translateY(-1px)}
+  .ibtn svg{width:16px;height:16px}
   .brand .ver{
-    margin-left:auto;font-size:12px;font-weight:600;color:var(--blue-deep);
+    font-size:12px;font-weight:600;color:var(--blue-deep);
     border:1px solid rgba(45,108,223,.28);border-radius:999px;padding:5px 13px;
     background:rgba(45,108,223,.07);white-space:nowrap;
   }
-  nav.tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 0 14px;scrollbar-width:thin}
+  nav.tabs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 11px;scrollbar-width:thin}
   nav.tabs::-webkit-scrollbar{height:6px}
   nav.tabs::-webkit-scrollbar-thumb{background:rgba(0,0,0,.16);border-radius:999px}
   .tab{
@@ -66,39 +77,21 @@
   .tab.active .n{background:rgba(255,255,255,.3)}
 
   /* ---------- Main ---------- */
-  main{max-width:1340px;margin:0 auto;padding:28px 26px}
-  .topic-head{display:flex;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap}
-  .topic-head .ico{
-    width:54px;height:54px;border-radius:16px;flex:none;background:#fff;
-    border:1px solid var(--line);display:grid;place-items:center;box-shadow:0 8px 22px rgba(30,40,80,.08);
-  }
-  .topic-head .ico svg{width:28px;height:28px}
-  .topic-head h2{font-size:26px;font-weight:700;letter-spacing:-.02em}
-  .topic-head p{font-size:14px;color:var(--ink-soft);margin-top:3px;max-width:660px}
-  .topic-head .counter{
-    margin-left:auto;font-size:12.5px;color:var(--ink-soft);font-weight:600;
-    background:rgba(255,255,255,.7);border:1px solid var(--line);padding:8px 14px;border-radius:12px;white-space:nowrap;
-  }
-  .topic-head .counter b{color:var(--blue-deep)}
-  .toolbar{display:flex;gap:10px;margin-bottom:26px;flex-wrap:wrap}
-  .btn{
-    border:1px solid var(--line);background:rgba(255,255,255,.7);padding:9px 16px;border-radius:12px;
-    font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;transition:all .16s ease;
-    display:inline-flex;align-items:center;gap:7px;
-  }
-  .btn:hover{background:#fff;transform:translateY(-1px)}
-  .btn svg{width:15px;height:15px}
+  main{flex:1;min-height:0;width:100%;max-width:1340px;margin:0 auto;padding:16px 26px;display:flex}
 
-  /* ---------- Grid 3x3 ---------- */
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-  @media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:660px){.grid{grid-template-columns:1fr}}
+  /* ---------- Grid 3x3 a tutta altezza ---------- */
+  .grid{
+    flex:1;display:grid;
+    grid-template-columns:repeat(3,1fr);
+    grid-template-rows:repeat(3,1fr);
+    gap:16px;min-height:0;
+  }
 
   /* ---------- iPad-shaped flashcard ---------- */
-  .card{perspective:1600px;cursor:pointer;animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
-  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  .card{perspective:1600px;cursor:pointer;height:100%;min-height:0;animation:rise .4s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
   .ipad{
-    position:relative;width:100%;aspect-ratio:1.4/1;
+    position:relative;width:100%;height:100%;
     transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,.8,.2,1);
   }
   .card.flipped .ipad{transform:rotateY(180deg)}
@@ -127,7 +120,7 @@
       #fbfcfe;
     box-shadow:0 0 0 1px rgba(0,0,0,.05) inset;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    padding:22px 26px;text-align:center;
+    padding:14px 22px;text-align:center;
   }
   /* fronte */
   .novita{
@@ -149,8 +142,19 @@
     align-self:stretch;padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid rgba(0,0,0,.07);
   }
   .back-term svg{width:16px;height:16px;flex:none}
-  .def{font-size:14.5px;line-height:1.5;color:#33343a;text-align:left;flex:1;display:flex;align-items:center}
+  .def{font-size:14px;line-height:1.46;color:#33343a;text-align:left;flex:1;display:flex;align-items:center;overflow:auto}
   .back .pill{margin-top:8px;color:var(--ink-soft);align-self:center}
+
+  /* Schermi piccoli (iPad, tablet, mobile): torna allo scroll con card leggibili */
+  @media(max-width:1000px),(max-height:680px){
+    body{height:auto;overflow:auto;display:block}
+    main{display:block;height:auto}
+    .grid{grid-template-columns:repeat(2,1fr);grid-template-rows:none;gap:22px}
+    .card{height:auto}
+    .ipad{height:auto;aspect-ratio:1.4/1}
+    .def{overflow:visible}
+  }
+  @media(max-width:660px){.grid{grid-template-columns:1fr}}
 
   footer{
     max-width:1340px;margin:18px auto 0;padding:14px 26px 44px;font-size:11.5px;color:var(--ink-soft);
@@ -183,33 +187,22 @@
         <h1>Glossario iPad</h1>
         <div class="sub">Le parole dell'iPad spiegate semplici · 90 carte · 10 argomenti</div>
       </div>
-      <span class="ver">iPadOS 26</span>
+      <div class="head-tools">
+        <span class="count">Scoperte <b id="flipCount">0</b>/9</span>
+        <button class="ibtn" id="flipAll" title="Scopri tutte" aria-label="Scopri tutte">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+        </button>
+        <button class="ibtn" id="reset" title="Ricomincia" aria-label="Ricomincia">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-6.4 2.6L3 8"/><path d="M3 3v5h5"/></svg>
+        </button>
+        <span class="ver">iPadOS 26</span>
+      </div>
     </div>
     <nav class="tabs" id="tabs"></nav>
   </div>
 </header>
 
 <main>
-  <div class="topic-head">
-    <div class="ico" id="topicIco"></div>
-    <div>
-      <h2 id="topicTitle"></h2>
-      <p id="topicDesc"></p>
-    </div>
-    <div class="counter">Carte scoperte: <b id="flipCount">0</b> / 9</div>
-  </div>
-
-  <div class="toolbar">
-    <button class="btn" id="flipAll">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
-      Scopri tutte
-    </button>
-    <button class="btn" id="reset">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-6.4 2.6L3 8"/><path d="M3 3v5h5"/></svg>
-      Ricomincia
-    </button>
-  </div>
-
   <div class="grid" id="grid"></div>
 </main>
 
@@ -391,9 +384,6 @@ const GROUPS = [
 
 const tabsEl=document.getElementById('tabs');
 const gridEl=document.getElementById('grid');
-const titleEl=document.getElementById('topicTitle');
-const descEl=document.getElementById('topicDesc');
-const icoEl=document.getElementById('topicIco');
 const flipCountEl=document.getElementById('flipCount');
 let current=0;
 
@@ -411,9 +401,6 @@ function select(i){
   current=i;
   const g=GROUPS[i];
   document.querySelectorAll('.tab').forEach((t,k)=>t.classList.toggle('active',k===i));
-  titleEl.textContent=g.name;
-  descEl.textContent=g.desc;
-  icoEl.innerHTML=svg(g.icon,'url(#blueGrad)','1.8');
   gridEl.innerHTML='';
   g.cards.forEach((c,k)=>{
     const card=document.createElement('div');
