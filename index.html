@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Glossario iPad · iPadOS 26 — Flashcard</title>
+<title>Glossario iPad · iPadOS 27 — Flashcard</title>
 <style>
   :root{
     --ink:#1d1d1f;
@@ -99,6 +99,7 @@
     box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 0 0 1px rgba(0,0,0,.06),0 16px 36px rgba(30,40,80,.16);
   }
   .face.back{transform:rotateY(180deg)}
+  .card:not(.flipped) .back,.card.flipped .front{pointer-events:none}
   .cam{position:absolute;top:5.5px;left:50%;transform:translateX(-50%);width:6px;height:6px;border-radius:50%;
     background:radial-gradient(circle at 35% 35%,#5b5d66,#222);opacity:.55;z-index:3}
   .screen{
@@ -115,8 +116,8 @@
   }
   .novita{position:absolute;top:13px;right:14px;font-size:9.5px;font-weight:800;letter-spacing:.04em;
     text-transform:uppercase;color:#fff;background:var(--novita);padding:4px 9px;border-radius:999px}
-  .bigico{width:44px;height:44px;margin-bottom:12px}
-  .bigico svg{width:44px;height:44px}
+  .ill{height:40%;max-height:110px;min-height:42px;margin-bottom:8px;display:flex;justify-content:center}
+  .ill svg{height:100%;width:auto;overflow:visible}
   .term{font-size:21px;font-weight:700;letter-spacing:-.02em;line-height:1.12}
   .en{font-size:12px;color:var(--ink-soft);font-weight:500;margin-top:6px}
   .pill{margin-top:16px;font-size:12.5px;font-weight:600;color:var(--blue);
@@ -128,7 +129,14 @@
   .def{flex:1;min-height:0;display:flex;align-items:center;overflow:auto}
   .def-txt{width:100%;font-size:14px;line-height:1.5;color:#3a3b42;text-align:left}
   .def-txt strong{font-weight:700;color:var(--blue-deep)}
-  .back .pill{margin-top:8px;color:var(--ink-soft);align-self:center}
+  .manual{
+    margin-top:8px;align-self:center;display:inline-flex;align-items:center;gap:7px;
+    font-size:12.5px;font-weight:600;color:var(--blue);text-decoration:none;
+    background:var(--pill);border-radius:999px;padding:7px 15px;border:1px solid rgba(0,0,0,.04);
+    transition:background .15s ease,color .15s ease;
+  }
+  .manual:hover{background:var(--accent-grad);color:#fff}
+  .manual svg{width:13px;height:13px;flex:none}
 
   /* Schermi piccoli: sidebar in alto orizzontale + griglia scrollabile */
   @media(max-width:1000px),(max-height:680px){
@@ -137,7 +145,7 @@
     .sidebar{width:100%;height:auto;flex-direction:column;border-right:none;border-bottom:1px solid var(--line);padding:12px 16px}
     .s-brand{border-bottom:none;margin-bottom:8px;padding-bottom:0}
     nav.nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
-    .navitem{flex:0 0 auto}
+    .navitem{flex:0 0 auto;width:auto}
     .navitem .nm{overflow:visible}
     .side-foot{margin-top:10px;flex-direction:row;align-items:center;justify-content:space-between;border-top:none;padding-top:0}
     .side-btns{flex:0 0 auto}
@@ -160,6 +168,8 @@
       <stop offset="0" stop-color="#7bbcff"/>
       <stop offset="1" stop-color="#2d6cdf"/>
     </linearGradient>
+    <linearGradient id="ilG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7bbcff"/><stop offset="1" stop-color="#2d6cdf"/></linearGradient>
+    <linearGradient id="ilGlass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e4eeff"/></linearGradient>
   </defs>
 </svg>
 
@@ -169,7 +179,7 @@
       <img class="logo" src="data:image/jpeg;base64,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" alt="Scuola Sacra Famiglia">
       <div>
         <h1>Glossario iPad</h1>
-        <span class="ver">iPadOS 26</span>
+        <span class="ver">iPadOS 27</span>
       </div>
     </div>
     <nav class="nav" id="tabs"></nav>
@@ -213,157 +223,158 @@ function svg(path, stroke='currentColor', w='1.6'){
 
 const GROUPS = [
 {
-  id:'interfaccia', name:'Come si usa', icon:I.home,
+  id:'interfaccia', ill:`<rect x="24" y="4" width="72" height="52" rx="8" fill="url(#ilGlass)" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <rect x="34" y="12" width="10" height="10" rx="3" fill="url(#ilG)"/><rect x="48" y="12" width="10" height="10" rx="3" fill="#c9b6fa"/><rect x="62" y="12" width="10" height="10" rx="3" fill="#9fd9c9"/><rect x="76" y="12" width="10" height="10" rx="3" fill="#ffb6d6"/><rect x="34" y="26" width="10" height="10" rx="3" fill="url(#ilG)"/><rect x="48" y="26" width="10" height="10" rx="3" fill="#c9b6fa"/><rect x="62" y="26" width="10" height="10" rx="3" fill="#9fd9c9"/><rect x="76" y="26" width="10" height="10" rx="3" fill="#ffb6d6"/> <rect x="36" y="42" width="48" height="9" rx="4.5" fill="#e4eeff" stroke="#a9c6f3" stroke-width="1.5"/> <rect x="44" y="44" width="5" height="5" rx="1.6" fill="url(#ilG)"/><rect x="57.5" y="44" width="5" height="5" rx="1.6" fill="#c9b6fa"/><rect x="71" y="44" width="5" height="5" rx="1.6" fill="#9fd9c9"/> <path d="M52 70 L60 65 L68 70" fill="none" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M52 76 L60 71 L68 76" fill="none" stroke="#a9c6f3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`, name:'Come si usa', icon:I.home,
   desc:'Le parti che vedi sempre sullo schermo e i movimenti delle dita per muoverti.',
   cards:[
-    {t:'Schermata Home', en:'Home Screen', d:'È la <strong>prima schermata</strong> con tutte le tue app. Da qui apri quello che ti serve e ci torni facendo <strong>scorrere un dito dal basso</strong>.'},
-    {t:'Dock', en:'Dock', d:'La <strong>barra in basso</strong> con le app che <strong>usi di più</strong>, sempre a portata di dito. Compare scorrendo dal bordo inferiore.'},
-    {t:'Libreria app', en:'App Library', d:'Un raccoglitore che <strong>ordina da solo</strong> tutte le app in <strong>gruppi</strong>. Serve a tenere la Home in ordine senza cancellare niente.'},
-    {t:'Spotlight', en:'Spotlight', d:'La <strong>ricerca</strong> dell\'iPad: scrivi una parola e <strong>trovi app, file e informazioni</strong>. Si apre tirando giù dal centro.'},
-    {t:'Centro di Controllo', en:'Control Center', d:'Un pannello di <strong>scorciatoie</strong> per volume, luminosità, Wi-Fi e torcia. Si apre dall\'<strong>angolo in alto a destra</strong>.'},
-    {t:'Schermata di blocco', en:'Lock Screen', d:'La schermata che vedi <strong>appena accendi</strong> l\'iPad: mostra <strong>ora e avvisi</strong>. Puoi cambiarle sfondo e stile.'},
-    {t:'Widget', en:'Widget', d:'Un riquadro che mostra le <strong>informazioni di un\'app a colpo d\'occhio</strong>, come il meteo, <strong>senza aprirla</strong>.'},
-    {t:'Gesti', en:'Gesti', d:'I <strong>movimenti delle dita</strong> per comandare l\'iPad: <strong>scorrere, toccare, allargare</strong>. Sostituiscono i pulsanti.'},
-    {t:'Azioni rapide', en:'Quick Actions', d:'Il menù che appare se <strong>tieni premuto</strong> su un\'icona: propone subito le <strong>cose più utili</strong> da fare.'}
+    {t:'Schermata Home', u:'ipadf6ea1ce5', en:'Home Screen', d:'È la <strong>prima schermata</strong> con tutte le tue app. Da qui apri quello che ti serve e ci torni facendo <strong>scorrere un dito dal basso</strong>.'},
+    {t:'Dock', u:'ipad997d9e62', en:'Dock', d:'La <strong>barra in basso</strong> con le app che <strong>usi di più</strong>, sempre a portata di dito. Compare scorrendo dal bordo inferiore.'},
+    {t:'Libreria app', u:'ipad9d0fc0d4', en:'App Library', d:'Un raccoglitore che <strong>ordina da solo</strong> tutte le app in <strong>gruppi</strong>. Serve a tenere la Home in ordine senza cancellare niente.'},
+    {t:'Spotlight', u:'ipad997d9818', en:'Spotlight', d:'La <strong>ricerca</strong> dell\'iPad: scrivi una parola e <strong>trovi app, file e informazioni</strong>. Si apre tirando giù dal centro.'},
+    {t:'Centro di Controllo', u:'ipade572ca56', en:'Control Center', d:'Un pannello di <strong>scorciatoie</strong> per volume, luminosità, Wi-Fi e torcia. Si apre dall\'<strong>angolo in alto a destra</strong>.'},
+    {t:'Schermata di blocco', u:'ipad782d4de8', en:'Lock Screen', d:'La schermata che vedi <strong>appena accendi</strong> l\'iPad: mostra <strong>ora e avvisi</strong>. Puoi cambiarle sfondo e stile.'},
+    {t:'Widget', u:'ipadb0de8630', en:'Widget', d:'Un riquadro che mostra le <strong>informazioni di un\'app a colpo d\'occhio</strong>, come il meteo, <strong>senza aprirla</strong>.'},
+    {t:'Gesti', u:'ipad2c09c4d4', en:'Gesti', d:'I <strong>movimenti delle dita</strong> per comandare l\'iPad: <strong>scorrere, toccare, allargare</strong>. Sostituiscono i pulsanti.'},
+    {t:'Azioni rapide', u:'ipad701fcbdc', en:'Quick Actions', d:'Il menù che appare se <strong>tieni premuto</strong> su un\'icona: propone subito le <strong>cose più utili</strong> da fare.'}
   ]
 },
 {
-  id:'multitasking', name:'Più app insieme', icon:I.windows,
-  desc:'Usare tante app nello stesso momento. Qui ci sono le grandi novità di iPadOS 26.',
+  id:'multitasking', ill:`<rect x="14" y="4" width="92" height="7" rx="3.5" fill="url(#ilG)"/> <line x1="22" y1="7.5" x2="30" y2="7.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="35" y1="7.5" x2="43" y2="7.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="48" y1="7.5" x2="56" y2="7.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/> <rect x="16" y="18" width="56" height="40" rx="6" fill="#eef3ff" stroke="#a9c6f3" stroke-width="2.5"/><line x1="16" y1="27" x2="72" y2="27" stroke="#a9c6f3" stroke-width="1.5"/><circle cx="22" cy="22.6" r="1.8" fill="#a9c6f3"/><circle cx="27.5" cy="22.6" r="1.8" fill="#a9c6f3"/><circle cx="33" cy="22.6" r="1.8" fill="#a9c6f3"/> <line x1="24" y1="36" x2="50" y2="36" stroke="#a9c6f3" stroke-width="2" stroke-linecap="round"/><line x1="24" y1="43" x2="44" y2="43" stroke="#a9c6f3" stroke-width="2" stroke-linecap="round"/> <rect x="48" y="32" width="58" height="42" rx="6" fill="url(#ilGlass)" stroke="#2d6cdf" stroke-width="2.5"/><line x1="48" y1="41" x2="106" y2="41" stroke="#2d6cdf" stroke-width="1.5"/><circle cx="54" cy="36.6" r="1.8" fill="#2d6cdf"/><circle cx="59.5" cy="36.6" r="1.8" fill="#2d6cdf"/><circle cx="65" cy="36.6" r="1.8" fill="#2d6cdf"/> <rect x="56" y="48" width="18" height="18" rx="4" fill="#c9b6fa"/> <line x1="80" y1="51" x2="98" y2="51" stroke="#a9c6f3" stroke-width="2" stroke-linecap="round"/><line x1="80" y1="58" x2="94" y2="58" stroke="#a9c6f3" stroke-width="2" stroke-linecap="round"/><line x1="80" y1="65" x2="97" y2="65" stroke="#a9c6f3" stroke-width="2" stroke-linecap="round"/>`, name:'Più app insieme', icon:I.windows,
+  desc:'Usare tante app nello stesso momento. Con le finestre e la barra dei menu l\'iPad lavora come un computer.',
   cards:[
-    {t:'Stage Manager', en:'Stage Manager', d:'Tiene le app aperte come <strong>finestre</strong> che puoi <strong>spostare e ridimensionare</strong>, con quelle recenti raccolte di lato.', nuovo:true},
-    {t:'Barra dei menu', en:'Menu Bar', d:'Una <strong>barra in alto</strong>, come sul computer, che appare avvicinando il puntatore: contiene <strong>tutti i comandi</strong> di un\'app.', nuovo:true},
-    {t:'Finestre regolabili', en:'Resizable Windows', d:'Apri un\'app come <strong>finestra</strong>, la sposti e ne <strong>cambi la grandezza</strong> tirando gli angoli, come su un PC.', nuovo:true},
-    {t:'Affiancamento', en:'Window Layouts', d:'Disposizioni veloci per mettere <strong>due app fianco a fianco</strong> e vederle <strong>insieme</strong>.'},
-    {t:'Picture in Picture', en:'Picture in Picture', d:'Rimpicciolisce un <strong>video in un riquadro</strong> sempre visibile, così lo guardi <strong>mentre usi altre app</strong>.'},
-    {t:'Trascina e rilascia', en:'Drag and Drop', d:'<strong>Sposti testo, foto o file</strong> da un\'app all\'altra <strong>tenendoli premuti</strong> e lasciandoli dove vuoi.'},
-    {t:'Cambio app', en:'App Switcher', d:'La vista con <strong>tutte le app aperte</strong> in piccolo: serve a <strong>passare</strong> da una all\'altra o a chiuderle.'},
-    {t:'Schermo esterno', en:'External Display', d:'Collegando un <strong>monitor</strong>, allarghi il lavoro su un <strong>secondo schermo</strong> e ci sposti sopra le finestre.'},
-    {t:'Due finestre stessa app', en:'Multiple Windows', d:'Apri la <strong>stessa app due volte</strong> (es. due note vicine) per <strong>confrontarle</strong> o lavorare in parallelo.'}
+    {t:'Stage Manager', u:'ipad1240f36f', en:'Stage Manager', d:'Tiene le app aperte come <strong>finestre</strong> che puoi <strong>spostare e ridimensionare</strong>, con quelle recenti raccolte di lato.'},
+    {t:'Barra dei menu', u:'ipadb4ede9db', en:'Menu Bar', d:'Una <strong>barra in alto</strong>, come sul computer, che appare avvicinando il puntatore: contiene <strong>tutti i comandi</strong> di un\'app.'},
+    {t:'Finestre regolabili', u:'ipad08c9970c', en:'Resizable Windows', d:'Apri un\'app come <strong>finestra</strong>, la sposti e ne <strong>cambi la grandezza</strong> tirando gli angoli, come su un PC.'},
+    {t:'Affiancamento', u:'ipadfe7c65e9', en:'Window Layouts', d:'Disposizioni veloci per mettere <strong>due app fianco a fianco</strong> e vederle <strong>insieme</strong>.'},
+    {t:'Picture in Picture', u:'ipad7858c392', en:'Picture in Picture', d:'Rimpicciolisce un <strong>video in un riquadro</strong> sempre visibile, così lo guardi <strong>mentre usi altre app</strong>.'},
+    {t:'Trascina e rilascia', u:'ipadaa83b207', en:'Drag and Drop', d:'<strong>Sposti testo, foto o file</strong> da un\'app all\'altra <strong>tenendoli premuti</strong> e lasciandoli dove vuoi.'},
+    {t:'Cambio app', u:'ipad619935ea', en:'App Switcher', d:'La vista con <strong>tutte le app aperte</strong> in piccolo: serve a <strong>passare</strong> da una all\'altra o a chiuderle.'},
+    {t:'Schermo esterno', u:'ipad8baf19a7', en:'External Display', d:'Collegando un <strong>monitor</strong>, allarghi il lavoro su un <strong>secondo schermo</strong> e ci sposti sopra le finestre.'},
+    {t:'Due finestre stessa app', u:'ipad8dfdf86b', en:'Multiple Windows', d:'Apri la <strong>stessa app due volte</strong> (es. due note vicine) per <strong>confrontarle</strong> o lavorare in parallelo.'}
   ]
 },
 {
-  id:'pencil', name:'Scrivere e disegnare', icon:I.pencil,
+  id:'pencil', ill:`<rect x="14" y="8" width="62" height="64" rx="7" fill="url(#ilGlass)" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <line x1="23" y1="22" x2="60" y2="22" stroke="#a9c6f3" stroke-width="2" stroke-linecap="round"/> <line x1="23" y1="30" x2="54" y2="30" stroke="#a9c6f3" stroke-width="2" stroke-linecap="round"/> <path d="M23 48 C27 38 31 38 32 46 C33 54 37 54 40 44 C43 36 47 38 48 46 C49 53 53 53 57 45" fill="none" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <g transform="translate(96 6) rotate(122)"> <rect x="0" y="-5.5" width="46" height="11" rx="3" fill="#ffffff" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M46 -5.5 L57 0 L46 5.5 Z" fill="url(#ilG)" stroke="#2d6cdf" stroke-width="2.5" stroke-linejoin="round"/> <line x1="9" y1="-5.5" x2="9" y2="5.5" stroke="#a9c6f3" stroke-width="2"/> </g>`, name:'Scrivere e disegnare', icon:I.pencil,
   desc:'Gli strumenti per scrivere, disegnare e dettare il testo con la penna o con la voce.',
   cards:[
-    {t:'Apple Pencil', en:'Apple Pencil', d:'La <strong>penna</strong> che scrive e disegna <strong>direttamente sullo schermo</strong>. Sente quanto premi e come la inclini.'},
-    {t:'Calligrafia', en:'Scribble', d:'<strong>Scrivi a mano</strong> con l\'Apple Pencil e l\'iPad lo trasforma subito in <strong>testo stampato</strong>.'},
-    {t:'Tastiera su schermo', en:'On-screen Keyboard', d:'La <strong>tastiera che appare</strong> per scrivere. Puoi <strong>dividerla, spostarla</strong> o renderla più piccola.'},
-    {t:'Tastiera flottante', en:'Floating Keyboard', d:'Una <strong>tastiera piccola</strong> che sposti dove vuoi e usi <strong>facendo scorrere un dito</strong> tra le lettere.'},
-    {t:'Dettatura', en:'Dictation', d:'<strong>Parli e l\'iPad scrive</strong> al posto tuo. Comoda per prendere <strong>appunti veloci</strong>.'},
-    {t:'Testo predittivo', en:'Predictive Text', d:'Mentre scrivi, l\'iPad ti <strong>suggerisce la parola dopo</strong>, così <strong>digiti più in fretta</strong>.'},
-    {t:'Sostituzioni testo', en:'Text Replacement', d:'Imposti una <strong>sigla</strong> che diventa una <strong>frase intera</strong>, ad esempio "ind" che diventa il tuo indirizzo.'},
-    {t:'Nota rapida', en:'Quick Note', d:'Un <strong>foglietto per appunti</strong> che richiami da <strong>qualsiasi app</strong>, senza chiudere quello che stai facendo.'},
-    {t:'Hover', en:'Hover', d:'Su alcuni iPad, <strong>avvicinando la penna senza toccare</strong>, lo schermo mostra <strong>in anticipo</strong> dove scriverai.'}
+    {t:'Apple Pencil', u:'ipad89415cd5', en:'Apple Pencil', d:'La <strong>penna</strong> che scrive e disegna <strong>direttamente sullo schermo</strong>. Sente quanto premi e come la inclini.'},
+    {t:'Calligrafia', u:'ipad355ab2a7', en:'Scribble', d:'<strong>Scrivi a mano</strong> con l\'Apple Pencil e l\'iPad lo trasforma subito in <strong>testo stampato</strong>.'},
+    {t:'Tastiera su schermo', u:'ipad997da459', en:'On-screen Keyboard', d:'La <strong>tastiera che appare</strong> per scrivere. Puoi <strong>dividerla, spostarla</strong> o renderla più piccola.'},
+    {t:'Tastiera flottante', u:'ipad02663f08', en:'Floating Keyboard', d:'Una <strong>tastiera piccola</strong> che sposti dove vuoi e usi <strong>facendo scorrere un dito</strong> tra le lettere.'},
+    {t:'Dettatura', u:'ipad997d9642', en:'Dictation', d:'<strong>Parli e l\'iPad scrive</strong> al posto tuo. Comoda per prendere <strong>appunti veloci</strong>.'},
+    {t:'Testo predittivo', u:'ipad736a3ca8', en:'Predictive Text', d:'Mentre scrivi, l\'iPad ti <strong>suggerisce la parola dopo</strong>, così <strong>digiti più in fretta</strong>.'},
+    {t:'Sostituzioni testo', u:'ipad997d96b7', en:'Text Replacement', d:'Imposti una <strong>sigla</strong> che diventa una <strong>frase intera</strong>, ad esempio "ind" che diventa il tuo indirizzo.'},
+    {t:'Nota rapida', u:'ipad5d91fd88', en:'Quick Note', d:'Un <strong>foglietto per appunti</strong> che richiami da <strong>qualsiasi app</strong>, senza chiudere quello che stai facendo.'},
+    {t:'Hover', u:'ipad89415cd5', en:'Hover', d:'Su alcuni iPad, <strong>avvicinando la penna senza toccare</strong>, lo schermo mostra <strong>in anticipo</strong> dove scriverai.'}
   ]
 },
 {
-  id:'account', name:'Account e iCloud', icon:I.cloud,
+  id:'account', ill:`<path d="M44 34 a11 11 0 0 1 0 -22 a15 15 0 0 1 28 -3 a11 11 0 0 1 4 25 Z" fill="url(#ilG)"/> <path d="M52 24 l6 -6 l6 6 M58 18 v10" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <rect x="14" y="48" width="36" height="26" rx="5" fill="url(#ilGlass)" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <rect x="82" y="44" width="18" height="30" rx="5" fill="url(#ilGlass)" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M40 44 C40 40 44 38 48 37" fill="none" stroke="#a9c6f3" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="1 5"/> <path d="M88 40 C88 37 84 35 80 35" fill="none" stroke="#a9c6f3" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="1 5"/> <circle cx="32" cy="61" r="4" fill="#c9b6fa"/><circle cx="91" cy="59" r="3.5" fill="#9fd9c9"/>`, name:'Account e iCloud', icon:I.cloud,
   desc:'Come l\'iPad salva i tuoi dati online e li tiene uguali su tutti i dispositivi.',
   cards:[
-    {t:'Apple Account', en:'Apple Account', d:'Il tuo <strong>account personale</strong> che <strong>collega tutti i servizi Apple</strong>. È la chiave per entrare nell\'iPad e nei tuoi acquisti.'},
-    {t:'iCloud', en:'iCloud', d:'Uno <strong>spazio online</strong> dove l\'iPad <strong>salva e condivide</strong> foto, file e contatti con gli altri dispositivi.'},
-    {t:'iCloud Drive', en:'iCloud Drive', d:'La parte di iCloud per i <strong>documenti</strong>: li ritrovi nell\'app File <strong>sempre aggiornati</strong>, ovunque.'},
-    {t:'iCloud+', en:'iCloud+', d:'La versione <strong>a pagamento</strong> di iCloud, con <strong>più spazio</strong> e funzioni extra per la privacy.'},
-    {t:'Backup', en:'Backup', d:'Una <strong>copia di sicurezza</strong> dei tuoi dati. Se perdi l\'iPad, puoi <strong>rimettere tutto com\'era</strong>.'},
-    {t:'Handoff', en:'Handoff', d:'<strong>Inizi una cosa sull\'iPad</strong> e la <strong>continui su iPhone o Mac</strong> senza ricominciare da capo.'},
-    {t:'Continuity', en:'Continuity', d:'Le funzioni che fanno <strong>lavorare insieme i dispositivi Apple</strong>, come chiamate e appunti condivisi.'},
-    {t:'In famiglia', en:'Family Sharing', d:'Permette di <strong>condividere acquisti, abbonamenti e spazio iCloud</strong> tra i membri della famiglia.'},
-    {t:'Sincronizzazione', en:'Sincronizzazione', d:'Quando <strong>cambi una cosa su un dispositivo</strong>, compare <strong>subito uguale su tutti gli altri</strong>.'}
+    {t:'Apple Account', u:'ipad995bbafe', en:'Apple Account', d:'Il tuo <strong>account personale</strong> che <strong>collega tutti i servizi Apple</strong>. È la chiave per entrare nell\'iPad e nei tuoi acquisti.'},
+    {t:'iCloud', u:'ipad2161498f', en:'iCloud', d:'Uno <strong>spazio online</strong> dove l\'iPad <strong>salva e condivide</strong> foto, file e contatti con gli altri dispositivi.'},
+    {t:'iCloud Drive', u:'ipad847732d1', en:'iCloud Drive', d:'La parte di iCloud per i <strong>documenti</strong>: li ritrovi nell\'app File <strong>sempre aggiornati</strong>, ovunque.'},
+    {t:'iCloud+', u:'ipadae7f7b31', en:'iCloud+', d:'La versione <strong>a pagamento</strong> di iCloud, con <strong>più spazio</strong> e funzioni extra per la privacy.'},
+    {t:'Backup', u:'ipad9a74df05xx', en:'Backup', d:'Una <strong>copia di sicurezza</strong> dei tuoi dati. Se perdi l\'iPad, puoi <strong>rimettere tutto com\'era</strong>.'},
+    {t:'Handoff', u:'ipad16784270', en:'Handoff', d:'<strong>Inizi una cosa sull\'iPad</strong> e la <strong>continui su iPhone o Mac</strong> senza ricominciare da capo.'},
+    {t:'Continuity', u:'ipad1ddf3831', en:'Continuity', d:'Le funzioni che fanno <strong>lavorare insieme i dispositivi Apple</strong>, come chiamate e appunti condivisi.'},
+    {t:'In famiglia', u:'ipadacb14669', en:'Family Sharing', d:'Permette di <strong>condividere acquisti, abbonamenti e spazio iCloud</strong> tra i membri della famiglia.'},
+    {t:'Sincronizzazione', u:'ipad2161498f', en:'Sincronizzazione', d:'Quando <strong>cambi una cosa su un dispositivo</strong>, compare <strong>subito uguale su tutti gli altri</strong>.'}
   ]
 },
 {
-  id:'comunicazione', name:'Comunicare', icon:I.chat,
+  id:'comunicazione', ill:`<path d="M12 14 h50 a8 8 0 0 1 8 8 v16 a8 8 0 0 1 -8 8 h-38 l-9 7 l2 -8 a8 8 0 0 1 -5 -7 v-16 a8 8 0 0 1 8 -8 Z" fill="url(#ilGlass)" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <line x1="22" y1="26" x2="58" y2="26" stroke="#a9c6f3" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="34" x2="48" y2="34" stroke="#a9c6f3" stroke-width="2.5" stroke-linecap="round"/> <path d="M58 36 h42 a8 8 0 0 1 8 8 v14 a8 8 0 0 1 -6 7.7 l2 8 l-10 -7.7 h-36 a8 8 0 0 1 -8 -8 v-14 a8 8 0 0 1 8 -8 Z" fill="url(#ilG)"/> <line x1="66" y1="48" x2="98" y2="48" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="66" y1="56" x2="88" y2="56" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/> <circle cx="60" cy="14" r="8" fill="#fff" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M60 18 C55 14.5 55.5 10.5 58 10.5 C59 10.5 59.6 11.2 60 12 C60.4 11.2 61 10.5 62 10.5 C64.5 10.5 65 14.5 60 18 Z" fill="#ff8fb8"/>`, name:'Comunicare', icon:I.chat,
   desc:'Messaggi, videochiamate e strumenti per scrivere e parlare con gli altri a distanza.',
   cards:[
-    {t:'iMessage', en:'iMessage', d:'Il servizio di <strong>messaggi Apple</strong> (le <strong>bolle azzurre</strong>) che invia testi e foto via internet tra dispositivi Apple.'},
-    {t:'FaceTime', en:'FaceTime', d:'L\'app per le <strong>videochiamate</strong> e le chiamate audio tra <strong>dispositivi Apple</strong>.'},
-    {t:'Tapback', en:'Tapback', d:'Una <strong>reazione veloce</strong> a un messaggio (cuore, pollice) che metti <strong>tenendolo premuto</strong>.'},
-    {t:'Memoji', en:'Memoji', d:'Un <strong>avatar che assomiglia a te</strong>, fa le tue facce e si invia come <strong>adesivo</strong> nelle chat.'},
-    {t:'SharePlay', en:'SharePlay', d:'Durante una videochiamata, <strong>guardi o ascolti la stessa cosa</strong> dei tuoi amici <strong>nello stesso momento</strong>.'},
-    {t:'Mail', en:'Mail', d:'L\'app della <strong>posta elettronica</strong>, dove <strong>leggi, scrivi e ordini</strong> le email.'},
-    {t:'Trascrizioni live', en:'Live Captions', d:'Mostra a schermo, <strong>scritto, quello che viene detto</strong> in una chiamata. Utile anche per <strong>chi non sente bene</strong>.'},
-    {t:'Traduzione in tempo reale', en:'Live Translation', d:'<strong>Traduce le frasi mentre parli o scrivi</strong>, per capirti con chi usa <strong>un\'altra lingua</strong>.'},
-    {t:'Chat di gruppo', en:'Group Conversation', d:'Una conversazione con <strong>più persone insieme</strong>, dove puoi <strong>rispondere a un messaggio preciso</strong> o nominare qualcuno.'}
+    {t:'iMessage', u:'ipadf1f9a6f5', en:'iMessage', d:'Il servizio di <strong>messaggi Apple</strong> (le <strong>bolle azzurre</strong>) che invia testi e foto via internet tra dispositivi Apple.'},
+    {t:'FaceTime', u:'ipad0997e101', en:'FaceTime', d:'L\'app per le <strong>videochiamate</strong> e le chiamate audio tra <strong>dispositivi Apple</strong>.'},
+    {t:'Tapback', u:'ipadc9df336f', en:'Tapback', d:'Una <strong>reazione veloce</strong> a un messaggio (cuore, pollice) che metti <strong>tenendolo premuto</strong>.'},
+    {t:'Memoji', u:'ipad30cf80ab', en:'Memoji', d:'Un <strong>avatar che assomiglia a te</strong>, fa le tue facce e si invia come <strong>adesivo</strong> nelle chat.'},
+    {t:'SharePlay', u:'ipad4f8bd889', en:'SharePlay', d:'Durante una videochiamata, <strong>guardi o ascolti la stessa cosa</strong> dei tuoi amici <strong>nello stesso momento</strong>.'},
+    {t:'Mail', u:'ipad3a4b6297', en:'Mail', d:'L\'app della <strong>posta elettronica</strong>, dove <strong>leggi, scrivi e ordini</strong> le email.'},
+    {t:'Trascrizioni live', u:'ipad3ae9be3c', en:'Live Captions', d:'Mostra a schermo, <strong>scritto, quello che viene detto</strong> in una chiamata. Utile anche per <strong>chi non sente bene</strong>.'},
+    {t:'Traduzione in tempo reale', u:'ipad3ae9be3c', en:'Live Translation', d:'<strong>Traduce le frasi mentre parli o scrivi</strong>, per capirti con chi usa <strong>un\'altra lingua</strong>.'},
+    {t:'Chat di gruppo', u:'ipadf5e4a7cc', en:'Group Conversation', d:'Una conversazione con <strong>più persone insieme</strong>, dove puoi <strong>rispondere a un messaggio preciso</strong> o nominare qualcuno.'}
   ]
 },
 {
-  id:'sicurezza', name:'Sicurezza', icon:I.lock,
+  id:'sicurezza', ill:`<path d="M30 18 V10 Q30 6 34 6 H42" fill="none" stroke="#a9c6f3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M90 18 V10 Q90 6 86 6 H78" fill="none" stroke="#a9c6f3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 62 V70 Q30 74 34 74 H42" fill="none" stroke="#a9c6f3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M90 62 V70 Q90 74 86 74 H78" fill="none" stroke="#a9c6f3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M60 14 L80 21 V38 C80 52 71 61 60 66 C49 61 40 52 40 38 V21 Z" fill="url(#ilG)"/> <rect x="51" y="37" width="18" height="14" rx="3" fill="#fff"/> <path d="M54.5 37 V33 a5.5 5.5 0 0 1 11 0 V37" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/> <circle cx="60" cy="43" r="2" fill="#2d6cdf"/><line x1="60" y1="44" x2="60" y2="47" stroke="#2d6cdf" stroke-width="2" stroke-linecap="round"/>`, name:'Sicurezza', icon:I.lock,
   desc:'Come l\'iPad protegge i tuoi dati e le tue password da chi non deve vederli.',
   cards:[
-    {t:'Face ID', en:'Face ID', d:'Sblocca l\'iPad <strong>riconoscendo il tuo viso</strong>. Guarda lo schermo e <strong>si apre solo per te</strong>.'},
-    {t:'Touch ID', en:'Touch ID', d:'Sblocca l\'iPad leggendo la tua <strong>impronta digitale</strong>, con un <strong>dito sul tasto</strong>.'},
-    {t:'Codice', en:'Passcode', d:'I <strong>numeri segreti</strong> che <strong>proteggono l\'iPad</strong>. Servono anche se Face ID o Touch ID non funzionano.'},
-    {t:'Passkey', en:'Passkey', d:'Un modo <strong>nuovo e sicuro</strong> per accedere che <strong>sostituisce le password</strong> ed è difficile da rubare.'},
-    {t:'Due fattori', en:'Two-Factor Auth', d:'Una <strong>protezione in più</strong>: oltre alla password serve un <strong>codice</strong> che arriva su un dispositivo di cui ti fidi.'},
-    {t:'Accedi con Apple', en:'Sign in with Apple', d:'Entri in app e siti <strong>senza creare nuove password</strong> e puoi <strong>nascondere la tua email vera</strong>.'},
-    {t:'Nascondi la mia email', en:'Hide My Email', d:'Crea <strong>indirizzi email finti</strong> che girano i messaggi alla tua email vera, per <strong>non darla in giro</strong>.'},
-    {t:'App Password', en:'Passwords', d:'L\'app che <strong>custodisce in modo sicuro</strong> le tue password e te le <strong>scrive da sola</strong> quando servono.'},
-    {t:'Privacy di Mail', en:'Mail Privacy', d:'<strong>Nasconde le tue tracce</strong>: chi ti scrive non sa <strong>se e quando hai aperto</strong> la sua email.'}
+    {t:'Face ID', u:'ipad66441e44', en:'Face ID', d:'Sblocca l\'iPad <strong>riconoscendo il tuo viso</strong>. Guarda lo schermo e <strong>si apre solo per te</strong>.'},
+    {t:'Touch ID', u:'ipadcb11e17d', en:'Touch ID', d:'Sblocca l\'iPad leggendo la tua <strong>impronta digitale</strong>, con un <strong>dito sul tasto</strong>.'},
+    {t:'Codice', u:'ipad997daf9f', en:'Passcode', d:'I <strong>numeri segreti</strong> che <strong>proteggono l\'iPad</strong>. Servono anche se Face ID o Touch ID non funzionano.'},
+    {t:'Passkey', u:'ipad2b37eddc', en:'Passkey', d:'Un modo <strong>nuovo e sicuro</strong> per accedere che <strong>sostituisce le password</strong> ed è difficile da rubare.'},
+    {t:'Due fattori', u:'ipad9757ade3', en:'Two-Factor Auth', d:'Una <strong>protezione in più</strong>: oltre alla password serve un <strong>codice</strong> che arriva su un dispositivo di cui ti fidi.'},
+    {t:'Accedi con Apple', u:'ipaddd718865', en:'Sign in with Apple', d:'Entri in app e siti <strong>senza creare nuove password</strong> e puoi <strong>nascondere la tua email vera</strong>.'},
+    {t:'Nascondi la mia email', u:'ipad931c015b', en:'Hide My Email', d:'Crea <strong>indirizzi email finti</strong> che girano i messaggi alla tua email vera, per <strong>non darla in giro</strong>.'},
+    {t:'App Password', u:'ipad055bd764', en:'Passwords', d:'L\'app che <strong>custodisce in modo sicuro</strong> le tue password e te le <strong>scrive da sola</strong> quando servono.'},
+    {t:'Chiedi di navigare', u:'ipad9950a506', en:'Ask to Browse', d:'Prima di aprire un <strong>sito nuovo</strong>, l\'iPad <strong>chiede il permesso</strong> a un adulto. Protegge la navigazione dei più piccoli.', nuovo:true}
   ]
 },
 {
-  id:'rete', name:'Connessioni', icon:I.wifi,
+  id:'rete', ill:`<path d="M42 22 a26 26 0 0 1 36 0" fill="none" stroke="#a9c6f3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M48 29 a17 17 0 0 1 24 0" fill="none" stroke="url(#ilG)" stroke-width="2.5" stroke-linecap="round"/> <path d="M54 36 a8 8 0 0 1 12 0" fill="none" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <circle cx="60" cy="42" r="2.6" fill="#2d6cdf"/> <rect x="10" y="46" width="34" height="26" rx="5" fill="url(#ilGlass)" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <rect x="84" y="44" width="18" height="30" rx="5" fill="url(#ilGlass)" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M50 60 H78" fill="none" stroke="#a9c6f3" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="1 5"/> <path d="M72 55 L78 60 L72 65" fill="none" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <circle cx="27" cy="59" r="4" fill="#9fd9c9"/>`, name:'Connessioni', icon:I.wifi,
   desc:'Le tecnologie con cui l\'iPad si collega a internet, agli accessori e agli altri dispositivi.',
   cards:[
-    {t:'Wi-Fi', en:'Wi-Fi', d:'Il collegamento a <strong>internet senza fili</strong> tramite una <strong>rete vicina</strong>. È il modo principale per andare online.'},
-    {t:'Bluetooth', en:'Bluetooth', d:'Un collegamento <strong>senza fili a corta distanza</strong> per <strong>cuffie, tastiere</strong> e per l\'Apple Pencil.'},
-    {t:'AirDrop', en:'AirDrop', d:'<strong>Invii al volo foto e file</strong> ai <strong>dispositivi Apple vicini</strong>, senza cavi e senza internet.'},
-    {t:'AirPlay', en:'AirPlay', d:'<strong>Mandi quello che vedi o ascolti</strong> dall\'iPad alla <strong>TV o agli altoparlanti</strong> compatibili.'},
-    {t:'Hotspot personale', en:'Personal Hotspot', d:'L\'iPad o l\'iPhone <strong>condivide la sua connessione internet</strong> con <strong>altri dispositivi</strong>.'},
-    {t:'Dati cellulare', en:'Cellular Data', d:'La connessione a internet tramite <strong>rete telefonica</strong>, su alcuni iPad che hanno la <strong>SIM</strong>.'},
-    {t:'eSIM', en:'eSIM', d:'Una <strong>SIM digitale</strong> già dentro l\'iPad: attivi internet <strong>senza inserire una scheda</strong>.'},
-    {t:'Modalità aereo', en:'Airplane Mode', d:'Con un tocco <strong>spegne tutte le connessioni</strong> senza fili, ad esempio quando sei <strong>in aereo</strong>.'},
-    {t:'VPN', en:'VPN', d:'Un collegamento <strong>protetto</strong> che <strong>nasconde i tuoi dati</strong>, usato spesso a scuola o al lavoro.'}
+    {t:'Wi-Fi', u:'ipad2db29c3a', en:'Wi-Fi', d:'Il collegamento a <strong>internet senza fili</strong> tramite una <strong>rete vicina</strong>. È il modo principale per andare online.'},
+    {t:'Bluetooth', u:'ipad997da4cf', en:'Bluetooth', d:'Un collegamento <strong>senza fili a corta distanza</strong> per <strong>cuffie, tastiere</strong> e per l\'Apple Pencil.'},
+    {t:'AirDrop', u:'ipad46a13d74', en:'AirDrop', d:'<strong>Invii al volo foto e file</strong> ai <strong>dispositivi Apple vicini</strong>, senza cavi e senza internet.'},
+    {t:'AirPlay', u:'ipadf27a8cb7', en:'AirPlay', d:'<strong>Mandi quello che vedi o ascolti</strong> dall\'iPad alla <strong>TV o agli altoparlanti</strong> compatibili.'},
+    {t:'Hotspot personale', u:'ipadb2c87b68', en:'Personal Hotspot', d:'L\'iPad o l\'iPhone <strong>condivide la sua connessione internet</strong> con <strong>altri dispositivi</strong>.'},
+    {t:'Dati cellulare', u:'ipadbfe780eb', en:'Cellular Data', d:'La connessione a internet tramite <strong>rete telefonica</strong>, su alcuni iPad che hanno la <strong>SIM</strong>.'},
+    {t:'eSIM', u:'ipad9940e098', en:'eSIM', d:'Una <strong>SIM digitale</strong> già dentro l\'iPad: attivi internet <strong>senza inserire una scheda</strong>.'},
+    {t:'Modalità aereo', u:'ipad96eda0af', en:'Airplane Mode', d:'Con un tocco <strong>spegne tutte le connessioni</strong> senza fili, ad esempio quando sei <strong>in aereo</strong>.'},
+    {t:'VPN', u:'ipad2db29c3a', en:'VPN', d:'Un collegamento <strong>protetto</strong> che <strong>nasconde i tuoi dati</strong>, usato spesso a scuola o al lavoro.'}
   ]
 },
 {
-  id:'sistema', name:'Impostazioni', icon:I.gear,
+  id:'sistema', ill:`<rect x="32" y="15" width="8" height="10" rx="2" fill="url(#ilG)" transform="rotate(0 36 40)"/><rect x="32" y="15" width="8" height="10" rx="2" fill="url(#ilG)" transform="rotate(45 36 40)"/><rect x="32" y="15" width="8" height="10" rx="2" fill="url(#ilG)" transform="rotate(90 36 40)"/><rect x="32" y="15" width="8" height="10" rx="2" fill="url(#ilG)" transform="rotate(135 36 40)"/><rect x="32" y="15" width="8" height="10" rx="2" fill="url(#ilG)" transform="rotate(180 36 40)"/><rect x="32" y="15" width="8" height="10" rx="2" fill="url(#ilG)" transform="rotate(225 36 40)"/><rect x="32" y="15" width="8" height="10" rx="2" fill="url(#ilG)" transform="rotate(270 36 40)"/><rect x="32" y="15" width="8" height="10" rx="2" fill="url(#ilG)" transform="rotate(315 36 40)"/> <circle cx="36" cy="40" r="17" fill="url(#ilG)"/> <circle cx="36" cy="40" r="7" fill="#fff"/> <rect x="68" y="30" width="32" height="16" rx="8" fill="url(#ilG)"/><circle cx="92" cy="38" r="6" fill="#fff"/> <rect x="68" y="54" width="32" height="16" rx="8" fill="#e4e6ee" stroke="#c9ccd6" stroke-width="1.5"/><circle cx="76" cy="62" r="6" fill="#fff" stroke="#c9ccd6" stroke-width="1.5"/> <path d="M94 8 a9 9 0 1 0 8 13 a7 7 0 0 1 -8 -13 Z" fill="#c9b6fa"/>`, name:'Impostazioni', icon:I.gear,
   desc:'Come gestire avvisi, concentrazione, batteria e le funzioni di base dell\'iPad.',
   cards:[
-    {t:'Full immersion', en:'Focus', d:'Una modalità che <strong>blocca gli avvisi che distraggono</strong>, ad esempio <strong>mentre studi</strong> o riposi.'},
-    {t:'Non disturbare', en:'Do Not Disturb', d:'La full immersion più semplice: <strong>silenzia avvisi e chiamate</strong> per <strong>non essere interrotti</strong>.'},
-    {t:'Notifiche', en:'Notifications', d:'Gli <strong>avvisi delle app</strong>. Puoi <strong>raggrupparli</strong> e decidere quando riceverli.'},
-    {t:'Tempo di utilizzo', en:'Screen Time', d:'<strong>Mostra quanto usi l\'iPad</strong> e permette di <strong>mettere dei limiti</strong> alle app.'},
-    {t:'Risparmio energetico', en:'Low Power Mode', d:'<strong>Riduce i consumi</strong> per far <strong>durare di più la batteria</strong> quando è quasi scarica.'},
-    {t:'Screenshot', en:'Screenshot', d:'Una <strong>foto di ciò che hai sullo schermo</strong>, che puoi subito <strong>scrivere sopra e condividere</strong>.'},
-    {t:'Registrazione schermo', en:'Screen Recording', d:'<strong>Registra in video</strong> quello che succede sullo schermo, utile per <strong>spiegare qualcosa</strong>.'},
-    {t:'Impostazioni', en:'Settings', d:'L\'app da cui <strong>regoli tutto l\'iPad</strong>: account, suoni, rete, privacy.'},
-    {t:'Aggiornamento', en:'Software Update', d:'Installa la <strong>nuova versione di iPadOS</strong>, con <strong>novità e correzioni di sicurezza</strong>.'}
+    {t:'Full immersion', u:'ipad2789d162', en:'Focus', d:'Una modalità che <strong>blocca gli avvisi che distraggono</strong>, ad esempio <strong>mentre studi</strong> o riposi.'},
+    {t:'Non disturbare', u:'ipadeb91a1c3', en:'Do Not Disturb', d:'La full immersion più semplice: <strong>silenzia avvisi e chiamate</strong> per <strong>non essere interrotti</strong>.'},
+    {t:'Notifiche', u:'ipad66f11759', en:'Notifications', d:'Gli <strong>avvisi delle app</strong>. Puoi <strong>raggrupparli</strong> e decidere quando riceverli.'},
+    {t:'Tempo di utilizzo', u:'ipad88efc1ad', en:'Screen Time', d:'<strong>Mostra quanto usi l\'iPad</strong> e permette di <strong>mettere dei limiti</strong> alle app.'},
+    {t:'Risparmio energetico', u:'ipadbaefc31d', en:'Low Power Mode', d:'<strong>Riduce i consumi</strong> per far <strong>durare di più la batteria</strong> quando è quasi scarica.'},
+    {t:'Screenshot', u:'ipad08a40f3b', en:'Screenshot', d:'Una <strong>foto di ciò che hai sullo schermo</strong>, che puoi subito <strong>scrivere sopra e condividere</strong>.'},
+    {t:'Registrazione schermo', u:'ipaddf78ce08', en:'Screen Recording', d:'<strong>Registra in video</strong> quello che succede sullo schermo, utile per <strong>spiegare qualcosa</strong>.'},
+    {t:'Impostazioni', u:'ipadba23b9b4', en:'Settings', d:'L\'app da cui <strong>regoli tutto l\'iPad</strong>: account, suoni, rete, privacy.'},
+    {t:'Aggiornamento', u:'ipad9a74c576', en:'Software Update', d:'Installa la <strong>nuova versione di iPadOS</strong>, con <strong>novità e correzioni di sicurezza</strong>.'}
   ]
 },
 {
-  id:'app', name:'App utili', icon:I.apps,
+  id:'app', ill:`<path d="M14 24 a5 5 0 0 1 5 -5 h18 l6 6 h40 a5 5 0 0 1 5 5 v36 a5 5 0 0 1 -5 5 h-64 a5 5 0 0 1 -5 -5 Z" fill="#cfe0fb"/> <rect x="26" y="10" width="40" height="46" rx="5" fill="#fff" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <line x1="34" y1="22" x2="58" y2="22" stroke="#a9c6f3" stroke-width="2" stroke-linecap="round"/><line x1="34" y1="30" x2="54" y2="30" stroke="#a9c6f3" stroke-width="2" stroke-linecap="round"/> <path d="M14 36 h74 a5 5 0 0 1 5 5 v25 a5 5 0 0 1 -5 5 h-69 a5 5 0 0 1 -5 -5 Z" fill="url(#ilG)"/> <rect x="76" y="12" width="32" height="34" rx="5" fill="url(#ilGlass)" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" transform="rotate(8 92 29)"/> <g transform="rotate(8 92 29)"> <path d="M82 22 l2.5 2.5 l4.5 -5" fill="none" stroke="#2d6cdf" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><line x1="93" y1="22" x2="102" y2="22" stroke="#a9c6f3" stroke-width="2" stroke-linecap="round"/> <path d="M82 33 l2.5 2.5 l4.5 -5" fill="none" stroke="#2d6cdf" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><line x1="93" y1="33" x2="100" y2="33" stroke="#a9c6f3" stroke-width="2" stroke-linecap="round"/> </g>`, name:'App utili', icon:I.apps,
   desc:'Le app già presenti nell\'iPad più utili per studiare, ordinare documenti e lavorare in classe.',
   cards:[
-    {t:'App Store', en:'App Store', d:'Il <strong>negozio ufficiale</strong> dove <strong>scarichi e aggiorni</strong> le app.'},
-    {t:'File', en:'Files', d:'L\'app che <strong>raccoglie tutti i documenti</strong>, sull\'iPad e su iCloud, <strong>ordinati in cartelle</strong>.'},
-    {t:'Anteprima', en:'Preview', d:'La nuova app per <strong>vedere, scrivere sopra e firmare</strong> PDF e immagini.', nuovo:true},
-    {t:'Freeform', en:'Freeform', d:'Una <strong>lavagna senza confini</strong> dove disegnare e scrivere idee, anche <strong>insieme ai compagni</strong>.'},
-    {t:'Note', en:'Notes', d:'L\'app per gli <strong>appunti</strong>: unisce <strong>testo, disegni, foto</strong> e documenti scansionati.'},
-    {t:'Promemoria', en:'Reminders', d:'Per fare <strong>liste di cose da fare</strong> con <strong>scadenze e avvisi</strong>, così non dimentichi niente.'},
-    {t:'Cartelle smart', en:'Smart Folders', d:'Cartelle che <strong>raccolgono da sole</strong> le note giuste seguendo delle <strong>regole</strong>.'},
-    {t:'App clip', en:'App Clip', d:'Un <strong>pezzettino di un\'app</strong> che si apre al volo per una cosa veloce, <strong>senza installarla tutta</strong>.'},
-    {t:'Gruppi di pannelli', en:'Tab Groups', d:'In Safari, <strong>insiemi di schede salvate insieme</strong>, per <strong>tenere separati</strong> scuola e tempo libero.'}
+    {t:'App Store', u:'ipad9b4cea76', en:'App Store', d:'Il <strong>negozio ufficiale</strong> dove <strong>scarichi e aggiorni</strong> le app.'},
+    {t:'File', u:'ipad4aaf0d7f', en:'Files', d:'L\'app che <strong>raccoglie tutti i documenti</strong>, sull\'iPad e su iCloud, <strong>ordinati in cartelle</strong>.'},
+    {t:'Anteprima', u:'ipadee2d1363', en:'Preview', d:'L\'app per <strong>vedere, scrivere sopra e firmare</strong> PDF e immagini.'},
+    {t:'Freeform', u:'ipad9c59637d', en:'Freeform', d:'Una <strong>lavagna senza confini</strong> dove disegnare e scrivere idee, anche <strong>insieme ai compagni</strong>.'},
+    {t:'Note', u:'ipadfeea407c', en:'Notes', d:'L\'app per gli <strong>appunti</strong>: unisce <strong>testo, disegni, foto</strong> e documenti scansionati.'},
+    {t:'Promemoria', u:'ipadbb76bb3f', en:'Reminders', d:'Per fare <strong>liste di cose da fare</strong> con <strong>scadenze e avvisi</strong>, così non dimentichi niente.'},
+    {t:'Cartelle smart', u:'ipad0a267d6e', en:'Smart Folders', d:'Cartelle che <strong>raccolgono da sole</strong> le note giuste seguendo delle <strong>regole</strong>.'},
+    {t:'App clip', u:'ipadae80b8c8', en:'App Clip', d:'Un <strong>pezzettino di un\'app</strong> che si apre al volo per una cosa veloce, <strong>senza installarla tutta</strong>.'},
+    {t:'Gruppi di pannelli', u:'ipadf5a4dd79', en:'Tab Groups', d:'In Safari, <strong>insiemi di schede salvate insieme</strong>, per <strong>tenere separati</strong> scuola e tempo libero.'}
   ]
 },
 {
-  id:'intelligenti', name:'Funzioni smart', icon:I.spark,
-  desc:'Strumenti intelligenti, fotocamera e il nuovo aspetto grafico arrivato con iPadOS 26.',
+  id:'intelligenti', ill:`<path d="M24 19 V10 Q24 6 28 6 H37" fill="none" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M96 19 V10 Q96 6 92 6 H83" fill="none" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 61 V70 Q24 74 28 74 H37" fill="none" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M96 61 V70 Q96 74 92 74 H83" fill="none" stroke="#2d6cdf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M56 20 C62.16 35.84 62.16 35.84 78 42 C62.16 48.16 62.16 48.16 56 64 C49.84 48.16 49.84 48.16 34 42 C49.84 35.84 49.84 35.84 56 20 Z" fill="url(#ilG)"/> <path d="M80 14 C82.24 19.759999999999998 82.24 19.759999999999998 88 22 C82.24 24.240000000000002 82.24 24.240000000000002 80 30 C77.76 24.240000000000002 77.76 24.240000000000002 72 22 C77.76 19.759999999999998 77.76 19.759999999999998 80 14 Z" fill="#c9b6fa"/> <path d="M78 52.5 C79.54 56.46 79.54 56.46 83.5 58 C79.54 59.54 79.54 59.54 78 63.5 C76.46 59.54 76.46 59.54 72.5 58 C76.46 56.46 76.46 56.46 78 52.5 Z" fill="#9fd9c9"/> <path d="M36 17.5 C37.26 20.74 37.26 20.74 40.5 22 C37.26 23.26 37.26 23.26 36 26.5 C34.74 23.26 34.74 23.26 31.5 22 C34.74 20.74 34.74 20.74 36 17.5 Z" fill="#ffb6d6"/>`, name:'Funzioni smart', icon:I.spark,
+  desc:'Strumenti intelligenti e fotocamera. Con iPadOS 27 l\'iPad capisce meglio quello che scrivi e quello che vede.',
   cards:[
-    {t:'Apple Intelligence', en:'Apple Intelligence', d:'Le <strong>funzioni intelligenti</strong> dell\'iPad che aiutano a <strong>scrivere, riassumere e creare immagini</strong>, con attenzione alla privacy.', nuovo:true},
-    {t:'Siri', en:'Siri', d:'L\'<strong>assistente</strong> che capisce le tue richieste <strong>a voce o scritte</strong> e ti aiuta a usare l\'iPad.'},
-    {t:'Testo attivo', en:'Live Text', d:'<strong>Riconosce il testo dentro le foto</strong>: puoi <strong>copiarlo, tradurlo</strong> o trasformarlo in link.'},
-    {t:'Liquid Glass', en:'Liquid Glass', d:'Il <strong>nuovo aspetto</strong> di iPadOS 26: <strong>superfici simili al vetro</strong> che lasciano intravedere ciò che c\'è sotto.', nuovo:true},
-    {t:'Lente', en:'Magnifier', d:'Usa la <strong>fotocamera come lente d\'ingrandimento</strong> e <strong>descrive ciò che hai intorno</strong>.'},
-    {t:'Live Photo', en:'Live Photo', d:'Una foto che cattura anche un <strong>attimo di movimento e suono</strong>: si <strong>anima se la tieni premuta</strong>.'},
-    {t:'Modalità Ritratto', en:'Portrait Mode', d:'<strong>Mette a fuoco la persona</strong> e <strong>sfoca lo sfondo</strong>, per ritratti da fotografo.'},
-    {t:'Codice QR', en:'QR Code', d:'La fotocamera <strong>legge i quadratini QR</strong> e <strong>apre da sola il link</strong> collegato.'},
-    {t:'Scontorno', en:'Subject Lift', d:'<strong>Tieni premuto</strong> su una persona in una foto e l\'iPad la <strong>stacca dallo sfondo</strong> per copiarla.'}
+    {t:'Apple Intelligence', u:'ipade5045bb1', en:'Apple Intelligence', d:'La <strong>nuova generazione</strong> delle funzioni intelligenti dell\'iPad: aiuta a <strong>scrivere, cercare e creare immagini</strong> dentro le app, con attenzione alla privacy.', nuovo:true},
+    {t:'Siri AI', u:'ipad4bce70ef', en:'Siri', d:'L\'<strong>assistente</strong> ora ha una <strong>app tutta sua</strong>, capisce meglio le domande e <strong>tiene il filo del discorso</strong>.', nuovo:true},
+    {t:'Testo attivo', u:'ipad50e4cb3d', en:'Live Text', d:'<strong>Riconosce il testo dentro le foto</strong>: puoi <strong>copiarlo, tradurlo</strong> o trasformarlo in link.'},
+    {t:'Liquid Glass', u:'ipad8d9d296d', en:'Liquid Glass', d:'Il <strong>design a vetro</strong> dell\'iPad: <strong>superfici trasparenti</strong> che lasciano intravedere ciò che c\'è sotto.'},
+    {t:'Lente', u:'ipadd86f5027', en:'Magnifier', d:'Usa la <strong>fotocamera come lente d\'ingrandimento</strong> e <strong>descrive ciò che hai intorno</strong>.'},
+    {t:'Live Photo', u:'ipadfcab963c', en:'Live Photo', d:'Una foto che cattura anche un <strong>attimo di movimento e suono</strong>: si <strong>anima se la tieni premuta</strong>.'},
+    {t:'Modalità Ritratto', u:'ipadd415e2e0', en:'Portrait Mode', d:'<strong>Mette a fuoco la persona</strong> e <strong>sfoca lo sfondo</strong>, per ritratti da fotografo.'},
+    {t:'Codice QR', u:'ipad1be06c51', en:'QR Code', d:'La fotocamera <strong>legge i quadratini QR</strong> e <strong>apre da sola il link</strong> collegato.'},
+    {t:'Intelligenza visiva', u:'ipad8d9d296d', en:'Visual Intelligence', d:'<strong>Inquadri qualcosa con la fotocamera</strong> e l\'iPad ti dà <strong>informazioni su ciò che vedi</strong>.', nuovo:true}
   ]
 }
 ];
 
+const MANUALE='https://support.apple.com/it-it/guide/ipad/';
 const tabsEl=document.getElementById('tabs');
 const gridEl=document.getElementById('grid');
 const descEl=document.getElementById('topicDesc');
@@ -397,8 +408,8 @@ function select(i){
         <div class="face front">
           <span class="cam"></span>
           <div class="screen">
-            ${c.nuovo?'<span class="novita">Novità 26</span>':''}
-            <div class="bigico">${svg(g.icon,'url(#blueGrad)','1.7')}</div>
+            ${c.nuovo?'<span class="novita">Novità 27</span>':''}
+            <div class="ill"><svg viewBox="0 0 120 80" aria-hidden="true">${g.ill}</svg></div>
             <div class="term">${c.t}</div>
             <div class="en">${c.en}</div>
             <div class="pill">Scopri</div>
@@ -409,11 +420,13 @@ function select(i){
           <div class="screen">
             <div class="back-term">${svg(g.icon,'url(#blueGrad)','1.8')} ${c.t}</div>
             <div class="def"><div class="def-txt">${c.d}</div></div>
-            <div class="pill">Tocca per girare</div>
+            <a class="manual" href="${MANUALE}${c.u}/ipados" target="_blank" rel="noopener" title="Apre la pagina ufficiale sul sito Apple">
+              ${svg(I.book,'currentColor','2')} Approfondisci sul manuale Apple
+            </a>
           </div>
         </div>
       </div>`;
-    card.addEventListener('click',()=>{card.classList.toggle('flipped');updateFlipCount();});
+    card.addEventListener('click',e=>{if(e.target.closest('a'))return;card.classList.toggle('flipped');updateFlipCount();});
     gridEl.appendChild(card);
   });
   updateFlipCount();
